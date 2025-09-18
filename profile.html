@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile - SportIQ</title>
+
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="profile.css" />
+  </head>
+  <body>
+    <div class="profile-container">
+      <!-- Left Section -->
+      <div class="profile-details">
+        <h2 id="name">User Name</h2>
+        <p id="dob">DOB:</p>
+        <p id="gender">Gender:</p>
+        <p id="mobile">Mobile:</p>
+        <p id="role">Role:</p>
+        <p id="sport">Sport:</p>
+        <p id="email">Email:</p>
+
+        <div class="btn-group">
+          <button
+            class="btn-small dashboard"
+            onclick="window.location.href='dashboard.html'"
+          >
+            🏠 Dashboard
+          </button>
+          <button class="btn-small logout" onclick="logoutUser()">
+            🚪 Logout
+          </button>
+        </div>
+      </div>
+
+      <!-- Right Section -->
+      <div class="profile-picture">
+        <img id="avatar" src="" alt="Profile Pic" class="avatar" />
+      </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+      requireLogin();
+
+      const user = JSON.parse(localStorage.getItem("sportiqDetails")) || {};
+      const avatar = document.getElementById("avatar");
+
+      avatar.src = user.profilePic
+        ? user.profilePic
+        : "https://cdn-icons-png.flaticon.com/512/149/149071.png";
+
+      // Always display with fallback if missing
+      document.getElementById("name").textContent =
+        user.name || user.username || "Guest User";
+      document.getElementById("dob").textContent = "DOB: " + (user.dob || "-");
+      document.getElementById("gender").textContent =
+        "Gender: " + (user.gender || "-");
+      document.getElementById("mobile").textContent =
+        "Mobile: " + (user.mobile || "-");
+      document.getElementById("role").textContent =
+        "Role: " + (user.role || "-");
+      document.getElementById("sport").textContent =
+        "Sport: " + (user.sport || "-");
+      document.getElementById("email").textContent =
+        "Email: " + (user.email || "-");
+    </script>
+  </body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tournaments - SportIQ</title>
+
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="tournament.css" />
+  </head>
+  <body>
+    <div class="container tournament-container">
+      <h2 class="welcome">🏆 Find Tournaments</h2>
+
+      <!-- STEP 1: State Selection -->
+      <div class="t-step t-step-1 active">
+        <label for="stateInput">Select Your State</label>
+        <input
+          type="text"
+          id="stateInput"
+          placeholder="Type or select a state"
+          list="stateList"
+        />
+        <datalist id="stateList"></datalist>
+
+        <button class="btn neon-btn" onclick="goToDistricts()">Next</button>
+      </div>
+
+      <!-- STEP 2: District Selection -->
+      <div class="t-step t-step-2">
+        <label for="districtInput">Select District</label>
+        <input
+          type="text"
+          id="districtInput"
+          placeholder="Type or select a district"
+          list="districtList"
+        />
+        <datalist id="districtList"></datalist>
+
+        <button class="btn neon-btn" onclick="showTournaments()">
+          Show Tournaments
+        </button>
+
+        <div id="tournamentList" class="tournament-list"></div>
+      </div>
+    </div>
+
+    <!-- Shared helpers -->
+    <script src="app.js"></script>
+    <!-- Districts data -->
+    <script src="districts.js"></script>
+
+    <script>
+      requireLogin();
+
+      // Populate State datalist from districts.js
+      window.onload = () => {
+        const stateList = document.getElementById("stateList");
+        Object.keys(statesAndDistricts).forEach((state) => {
+          const opt = document.createElement("option");
+          opt.value = state;
+          stateList.appendChild(opt);
+        });
+      };
+
+      function goToDistricts() {
+        const state = document.getElementById("stateInput").value;
+        if (!state || !statesAndDistricts[state]) {
+          alert("⚠ Please select a valid state!");
+          return;
+        }
+        const districtList = document.getElementById("districtList");
+        districtList.innerHTML = "";
+        statesAndDistricts[state].forEach((d) => {
+          const opt = document.createElement("option");
+          opt.value = d;
+          districtList.appendChild(opt);
+        });
+
+        document.querySelector(".t-step-1").classList.remove("active");
+        document.querySelector(".t-step-2").classList.add("active");
+      }
+
+      function showTournaments() {
+        const district = document.getElementById("districtInput").value;
+        if (!district) {
+          alert("⚠ Please select a valid district!");
+          return;
+        }
+        const list = document.getElementById("tournamentList");
+        list.innerHTML = `
+        <h3>Sample Tournaments in ${district}</h3>
+        <div class="tournament-card">⚽ District Football Cup - ${district} Stadium</div>
+        <div class="tournament-card">🏏 Cricket Premier League - ${district} Sports Ground</div>
+        <div class="tournament-card">🏸 Badminton Open - Indoor Complex, ${district}</div>
+      `;
+      }
+    </script>
+  </body>
+</html>

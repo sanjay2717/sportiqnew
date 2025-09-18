@@ -1,0 +1,127 @@
+/* Reset + Base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Background */
+  background: url("backlogin.png") no-repeat center/cover;
+  background-attachment: fixed; /* keeps it in place */
+}
+
+/* Glassy Card */
+.container {
+  width: 350px;
+  max-width: 90%;
+  padding: 30px;
+  border-radius: 16px;
+
+  /* Glass effect */
+  background: rgba(255, 255, 255, 0.28); /* 👈 more transparent */
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+
+  animation: fadeInUp 0.7s ease-out;
+}
+
+/* Headings */
+.container h1,
+.container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #111;
+}
+
+/* Paragraph + minor text */
+.container p {
+  font-size: 14px;
+  text-align: center;
+  color: #333;
+  margin: 10px 0;
+}
+
+/* Input styles */
+.input-box {
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+}
+.input-box label {
+  font-size: 13px;
+  margin-bottom: 5px;
+  color: #444;
+}
+.input-box input {
+  padding: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 6px;
+  outline: none;
+  background: rgba(255, 255, 255, 0.6);
+  transition: all 0.3s ease;
+}
+.input-box input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 8px rgba(37, 99, 235, 0.4);
+  background: rgba(255, 255, 255, 0.8);
+}
+
+/* Buttons */
+.btn {
+  width: 100%;
+  margin-top: 10px;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  background: linear-gradient(135deg, #60a5fa, #2563eb);
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.btn:hover {
+  background: linear-gradient(135deg, #3b82f6, #1e40af);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+.btn:active {
+  transform: scale(0.97);
+}
+
+/* Links */
+a {
+  text-decoration: none;
+  font-weight: 600;
+  transition: opacity 0.3s ease;
+}
+a.primary {
+  color: #2563eb;
+}
+a.secondary {
+  color: #9333ea;
+}
+a:hover {
+  opacity: 0.8;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

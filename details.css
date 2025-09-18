@@ -1,0 +1,70 @@
+.details-container {
+  max-width: 450px;
+  text-align: center;
+}
+
+/* Steps */
+.step {
+  display: none;
+  animation: slideIn 0.7s ease forwards;
+}
+.step.active {
+  display: block;
+}
+
+/* Green Blur Gradient Button */
+.green-btn {
+  background: linear-gradient(135deg, #34d399, #059669);
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  margin-top: 20px;
+  width: 100%;
+  transition: all 0.3s ease;
+}
+.green-btn:hover {
+  background: linear-gradient(135deg, #10b981, #047857);
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 6px 16px rgba(16, 185, 129, 0.5);
+}
+
+/* OTP Note */
+.note {
+  font-size: 12px;
+  color: #555;
+  margin: 4px 0;
+}
+
+/* Image preview */
+.preview img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  margin-top: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+  border: 2px solid #34d399;
+}
+
+/* Skip text */
+#skip {
+  margin-top: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  color: black;
+  transition: color 0.3s ease;
+}
+#skip:hover {
+  color: blue;
+}
+
+/* Animations */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}

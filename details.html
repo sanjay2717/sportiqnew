@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Details Page - SportIQ</title>
+
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="details.css" />
+  </head>
+  <body>
+    <div class="container details-container">
+      <h2 class="welcome">Fill Your Details</h2>
+
+      <!-- Step 1 -->
+      <div class="step step-1 active">
+        <div class="input-box">
+          <label>What is your Name?</label>
+          <input type="text" id="name" placeholder="Enter your name" required />
+        </div>
+        <div class="input-box">
+          <label>What is your DOB?</label>
+          <input type="date" id="dob" required />
+        </div>
+        <div class="input-box">
+          <label>What is your Gender?</label>
+          <select id="gender">
+            <option value="">Select Gender</option>
+            <option>Male</option>
+            <option>Female</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="input-box">
+          <label>Mobile Number</label>
+          <input
+            type="tel"
+            id="mobile"
+            placeholder="Enter your mobile number"
+          />
+          <p class="note">Enter OTP: <b>123456</b> (demo OTP)</p>
+          <input type="text" id="otp" placeholder="Enter OTP here" />
+        </div>
+        <button class="btn green-btn" onclick="goToStep2()">Next</button>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="step step-2">
+        <div class="input-box">
+          <label>Choose your Role</label>
+          <select id="role">
+            <option value="">Select Role</option>
+            <option>Player</option>
+            <option>Coach</option>
+            <option>Admin</option>
+            <option>District Official</option> <!-- existing role -->
+            <option>Government Official</option> <!-- ✅ NEW -->
+          </select>
+        </div>
+        <div class="input-box">
+          <label>Choose your Sport</label>
+          <select id="sport">
+            <option value="">Select Sport</option>
+            <option>Cricket</option>
+            <option>Football</option>
+            <option>Hockey</option>
+            <option>Badminton</option>
+            <option>Kabaddi</option>
+            <option>Kho-Kho</option> <!-- ✅ Added -->
+            <option>Wrestling</option> <!-- ✅ Added -->
+            <option>Athletics</option>
+            <option>Tennis</option>
+            <option>Swimming</option>
+            <option>Table Tennis</option> <!-- ✅ Added -->
+            <option>Volleyball</option> <!-- ✅ Added -->
+            <option>Basketball</option> <!-- ✅ Added -->
+            <option>Archery</option> <!-- ✅ Added -->
+            <option>Boxing</option> <!-- ✅ Added -->
+            <option>Weightlifting</option> <!-- ✅ Added -->
+            <option>Shooting</option> <!-- ✅ Added -->
+            <option>Martial Arts</option> <!-- ✅ Added -->
+            <option>Esports</option> <!-- ✅ Added modern sport -->
+          </select>
+        </div>
+        <button class="btn green-btn" onclick="goToStep3()">Next</button>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="step step-3">
+        <div class="input-box">
+          <label>Upload Profile Picture</label>
+          <input
+            type="file"
+            id="profilePic"
+            accept="image/*"
+            onchange="previewImage(event)"
+          />
+        </div>
+        <div class="preview">
+          <img id="profilePreview" src="" alt="Preview" style="display: none" />
+        </div>
+        <button class="btn green-btn" onclick="saveProfile()">Finish</button>
+        <p id="skip" onclick="skipProfile()">Skip</p>
+      </div>
+    </div>
+
+    <!-- Import helper file first -->
+    <script src="app.js"></script>
+    <script>
+      // Step 1 -> Save personal details
+      function goToStep2() {
+        const otp = document.getElementById("otp").value;
+        if (otp !== "123456") {
+          alert("⚠ Invalid OTP! Use demo OTP: 123456");
+          return;
+        }
+
+        let user = getUser() || {};
+        user.name = document.getElementById("name").value.trim();
+        user.dob = document.getElementById("dob").value;
+        user.gender = document.getElementById("gender").value;
+        user.mobile = document.getElementById("mobile").value;
+
+        saveUser(user);
+
+        document.querySelector(".step-1").classList.remove("active");
+        document.querySelector(".step-2").classList.add("active");
+      }
+
+      // Step 2 -> Save role & sport
+      function goToStep3() {
+        let user = getUser() || {};
+        user.role = document.getElementById("role").value;
+        user.sport = document.getElementById("sport").value;
+
+        saveUser(user);
+
+        document.querySelector(".step-2").classList.remove("active");
+        document.querySelector(".step-3").classList.add("active");
+      }
+
+      // Step 3 -> Upload profile picture
+      function previewImage(event) {
+        const file = event.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = function (e) {
+            document.getElementById("profilePreview").style.display = "block";
+            document.getElementById("profilePreview").src = e.target.result;
+          };
+          reader.readAsDataURL(file);
+        }
+      }
+
+      function saveProfile() {
+        let user = getUser() || {};
+        const profilePic = document.getElementById("profilePreview").src;
+        if (profilePic && profilePic.startsWith("data:image")) {
+          user.profilePic = profilePic;
+        }
+        saveUser(user);
+
+        alert("✅ Profile Completed! Redirecting to Login...");
+        window.location.href = "login.html";
+      }
+
+      function skipProfile() {
+        alert("Profile setup skipped. Redirecting to Login...");
+        window.location.href = "login.html";
+      }
+    </script>
+  </body>
+</html>

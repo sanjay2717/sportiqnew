@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard - SportIQ</title>
+
+    <!-- Global + Dashboard CSS -->
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="dashboard.css" />
+
+    <!-- Lordicon -->
+    <script src="https://cdn.lordicon.com/lordicon.js"></script>
+  </head>
+  <body>
+    <div class="dashboard container">
+      <!-- Top toolbar -->
+      <div class="toolbar">
+        <button class="btn logout" onclick="logoutUser()">🚪 Logout</button>
+      </div>
+
+      <h2 class="welcome">👋 Hello, <span id="username"></span></h2>
+      <h3 id="roleTag">🎭 Your Role:</h3>
+
+      <!-- Role badge -->
+      <div id="roleBanner" class="role-badge" style="display: none"></div>
+
+      <!-- Cards dynamic -->
+      <div id="roleCards" class="card-grid"></div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+      requireLogin();
+      const user = getUser();
+
+      document.getElementById("username").textContent =
+        user.name || user.username;
+      document.getElementById(
+        "roleTag"
+      ).textContent = `🎭 Your Role: ${user.role}`;
+
+      const roleCards = document.getElementById("roleCards");
+
+      const dashboards = {
+        Player: [
+          { icon: "kbtmbyzy", label: "Tournament", link: "tournament.html" },
+          { icon: "dxjqoygy", label: "My Profile", link: "profile.html" },
+          { icon: "uqpazftn", label: "Achievements", link: "#" },
+          { icon: "vusrdugn", label: "My Sport", link: "#" },
+        ],
+        Coach: [
+          { icon: "hkkvwurz", label: "View Players", link: "#" },
+          { icon: "wkmgilbt", label: "Verify Achievements", link: "#" },
+          { icon: "oybdpbgm", label: "Schedules", link: "#" },
+          { icon: "yqzmiobz", label: "Reports", link: "#" },
+        ],
+        Organizer: [
+          { icon: "pithnlch", label: "Create Tournament", link: "#" },
+          { icon: "hjeefwhm", label: "Manage Registrations", link: "#" },
+          { icon: "oqaqqdrh", label: "Upload Results", link: "#" },
+          { icon: "xhdhjyqy", label: "Communication", link: "#" },
+        ],
+        Admin: [
+          {
+            icon: "abgtphux",
+            label: "Create Tournament / Event",
+            link: "#",
+            color: "#dc2626",
+          },
+          {
+            icon: "ajkxzzfb",
+            label: "Manage Registrations",
+            link: "#",
+            color: "#dc2626",
+          },
+          {
+            icon: "qvyppzqz",
+            label: "Upload Results & Certificates",
+            link: "#",
+            color: "#dc2626",
+          },
+          {
+            icon: "lupuorrc",
+            label: "Announcement",
+            link: "#",
+            color: "#dc2626",
+          },
+        ],
+        "District Official": [
+          { icon: "qjwprgca", label: "Approve Events", link: "#" },
+          { icon: "fnkgdaia", label: "Scout Players", link: "#" },
+          { icon: "bxxnzkuh", label: "Statistics", link: "#" },
+          { icon: "gpvmjssr", label: "Policy Data", link: "#" },
+        ],
+        "Government Official": [
+          {
+            icon: "rivoakkk",
+            label: "Approve Schemes",
+            link: "#",
+            color: "#9333ea",
+          }, // ✅ doc+check
+          {
+            icon: "zzcjjxew",
+            label: "Scholarships",
+            link: "#",
+            color: "#9333ea",
+          }, // ✅ graduation hat
+          {
+            icon: "jtqpkhoq",
+            label: "Sports Policies",
+            link: "#",
+            color: "#9333ea",
+          }, // ✅ scroll/doc
+          {
+            icon: "evyhwcno",
+            label: "Announcements",
+            link: "#",
+            color: "#9333ea",
+          }, // ✅ megaphone
+        ],
+      };
+
+      // Render role dashboard
+      const roleDashboard = dashboards[user.role] || [];
+      roleDashboard.forEach((card) => {
+        const el = document.createElement("a");
+        el.href = card.link;
+        el.className = "card-box";
+        const accent = card.color
+          ? `colors="primary:#111,secondary:${card.color}"`
+          : "";
+        el.innerHTML = `
+        <lord-icon src="https://cdn.lordicon.com/${card.icon}.json"
+                   trigger="hover" ${accent}
+                   style="width:70px;height:70px"></lord-icon>
+        <h3>${card.label}</h3>`;
+        roleCards.appendChild(el);
+      });
+
+      // Role badges
+      const banner = document.getElementById("roleBanner");
+      if (user.role === "Admin") {
+        document.querySelector(".dashboard").classList.add("admin-mode");
+        banner.textContent = "🔑 Admin Control Panel";
+        banner.style.display = "inline-block";
+      } else if (user.role === "Government Official") {
+        document.querySelector(".dashboard").classList.add("govt-mode");
+        banner.textContent = "🏛 Government Official Dashboard";
+        banner.style.display = "inline-block";
+      }
+    </script>
+  </body>
+</html>
